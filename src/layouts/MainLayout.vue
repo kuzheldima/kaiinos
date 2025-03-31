@@ -1,9 +1,9 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
-      <q-toolbar class="flex bg-white q-py-md">
-        <strong class="text-accent text-h5 q-mr-lg">Kaiinos</strong>
-        <q-input rounded standout="bg-white" v-model="search" class="search-field" dense label="Search">
+      <q-toolbar class="flex main-bar q-py-md">
+        <strong class="text-white text-h5 q-mr-lg">Smart Utility Manager</strong>
+        <q-input rounded outlined label-color="white" v-model="search" class="search-field q-ml-auto q-mr-md" dense label="Search">
           <template v-slot:append>
             <q-btn
               unelevated
@@ -14,9 +14,7 @@
             />
           </template>
         </q-input>
-        <div class="btns q-ml-auto">
-          <q-btn outline rounded color="accent" class="q-mr-sm" no-caps icon="mail" label="Mail" />
-          <q-btn outline rounded color="accent" class="q-mr-sm" no-caps label="Sign in" />
+        <div class="btns">
           <q-btn outline round color="accent" no-caps icon="person" style="min-height: 35px; min-width: 35px;" />
         </div>
       </q-toolbar>
@@ -25,8 +23,7 @@
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
-      bordered
-      class="bg-accent main-drawer"
+      class="main-drawer"
       :mini="miniState"
     >
       <q-btn
@@ -128,8 +125,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+.main-bar {
+  background: rgb(0,60,126);
+  background: linear-gradient(90deg, rgba(0,60,126,1) 0%, rgba(0,60,126,1) 0%, rgba(48,115,167,1) 83%);
+}
 .main-drawer {
+  background: linear-gradient(180deg, #004276, #0c1d44); /* Темно-синий градиент */
   color: white;
+  border-right: 1px solid #1a5487;
 }
 .search-field {
   max-width: 480px;
@@ -137,5 +140,8 @@ export default defineComponent({
   .q-field__control {
     padding-right: 0;
   }
+}
+.q-field--outlined .q-field__control:before {
+  border: 1px solid #438bca;
 }
 </style>

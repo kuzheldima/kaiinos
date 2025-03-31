@@ -1,263 +1,203 @@
 <template>
-  <q-page>
+  <q-page class="body-background sla">
+    <div class="full-width flex items-center justify-between q-px-md q-py-xs">
+      <div class="breadcrumbs">
+        <q-breadcrumbs>
+          <q-breadcrumbs-el label="Home" />
+          <q-breadcrumbs-el label="Block Load Data" />
+        </q-breadcrumbs>
+      </div>
+      <div class="btns-group">
+        <q-btn
+          flat
+          round
+          :icon="showFilters ? 'filter_alt_off' : 'filter_alt'"
+          @click="showFilters = !showFilters"
+        >
+          <q-tooltip>{{
+            showFilters ? "Hide filters" : "Show filters"
+          }}</q-tooltip>
+        </q-btn>
+        <q-btn flat round icon="sym_r_monitoring" @click="showAnalytic = true">
+          <q-tooltip>Show analytic</q-tooltip>
+        </q-btn>
+      </div>
+    </div>
     <div class="full-width">
-      <div class="row wrap q-gutter-md q-pr-md full-width bg-grey-2 q-py-md">
+      <div
+        v-if="showFilters"
+        class="row wrap q-gutter-md q-pr-md full-width q-pb-md"
+      >
         <div class="col">
           <q-select
+            dense
             outlined
-            class="bg-white"
+            label-color="white"
             label="Section name"
-            dense
           ></q-select>
         </div>
         <div class="col">
           <q-select
+            dense
             outlined
-            class="bg-white"
+            label-color="white"
             label="Subsection name"
-            dense
           ></q-select>
         </div>
         <div class="col">
           <q-select
+            dense
             outlined
-            class="bg-white"
+            label-color="white"
             label="Feeder name"
-            dense
           ></q-select>
         </div>
         <div class="col">
           <q-select
-            outlined
-            class="bg-white"
-            label="Date range"
             dense
+            outlined
+            label-color="white"
+            label="Date range"
           ></q-select>
         </div>
         <q-btn color="primary" label="Apply filters" no-caps></q-btn>
+        <q-btn flat :ripple="false" round icon="restart_alt">
+          <q-tooltip>Reset</q-tooltip>
+        </q-btn>
       </div>
-      <div class="row">
-        <div class="col-2 bg-grey-2 q-pt-md">
-          <div style="height: 100%">
-            <q-list>
-              <q-item>
-                <q-item-section>
-                  <q-item-label>Single line item</q-item-label>
-                  <q-item-label caption lines="2"
-                    >Secondary line text. Lorem ipsum dolor sit amet,
-                    consectetur adipiscit elit.</q-item-label
-                  >
-                </q-item-section>
-
-                <q-item-section side top>
-                  <q-item-label caption>5 min ago</q-item-label>
-                  <q-icon name="star" color="yellow" />
-                </q-item-section>
-              </q-item>
-
-              <q-separator spaced inset />
-
-              <q-item>
-                <q-item-section>
-                  <q-item-label>Single line item</q-item-label>
-                  <q-item-label caption
-                    >Secondary line text. Lorem ipsum dolor sit amet,
-                    consectetur adipiscit elit.</q-item-label
-                  >
-                </q-item-section>
-
-                <q-item-section side top>
-                  <q-item-label caption>Voted!</q-item-label>
-                </q-item-section>
-              </q-item>
-
-              <q-separator spaced inset />
-
-              <q-item>
-                <q-item-section>
-                  <q-item-label>Single line item</q-item-label>
-                  <q-item-label caption
-                    >Secondary line text. Lorem ipsum dolor sit amet,
-                    consectetur adipiscit elit.</q-item-label
-                  >
-                </q-item-section>
-
-                <q-item-section side top>
-                  <q-badge color="teal" label="10k" />
-                </q-item-section>
-              </q-item>
-
-              <q-separator spaced inset />
-
-              <q-item>
-                <q-item-section>
-                  <q-item-label>Single line item</q-item-label>
-                  <q-item-label caption
-                    >Secondary line text. Lorem ipsum dolor sit amet,
-                    consectetur adipiscit elit.</q-item-label
-                  >
-                </q-item-section>
-
-                <q-item-section side top>
-                  <q-item-label caption>2 min ago</q-item-label>
-                  <div class="text-orange">
-                    <q-icon name="star" />
-                    <q-icon name="star" />
-                    <q-icon name="star" />
-                  </div>
-                </q-item-section>
-              </q-item>
-
-              <q-separator spaced inset />
-
-              <q-item>
-                <q-item-section>
-                  <q-item-label>Single line item</q-item-label>
-                  <q-item-label caption
-                    >Secondary line text. Lorem ipsum dolor sit amet,
-                    consectetur adipiscit elit.</q-item-label
-                  >
-                </q-item-section>
-
-                <q-item-section side top>
-                  <q-item-label caption>meta</q-item-label>
-                </q-item-section>
-              </q-item>
-            </q-list>
+      <div class="row wrap q-col-gutter-md q-px-md q-pb-md">
+        <div class="col-6">
+          <div class="glass-card">
+            <strong class="text-h5 q-pl-md">Weekly Performance</strong>
+            <vue-apex-charts
+              width="100%"
+              height="400px"
+              :options="options"
+              :series="options.series"
+            ></vue-apex-charts>
           </div>
         </div>
-        <div class="col-7">
-          <div class="row">
-            <div class="col-12 q-pt-md q-px-md">
-              <div class="chart-holder">
-                <strong class="text-h5"
-                  >Dow Jones Industrial Average (^DJI)</strong
-                >
-                <vue-apex-charts
-                  width="100%"
-                  height="400px"
-                  :options="options"
-                  :series="options.series"
-                ></vue-apex-charts>
-              </div>
-            </div>
-            <div class="full-width bg-grey-2 q-py-md"></div>
-            <div class="col-6 q-pt-lg q-px-md">
-              <strong class="text-h5">Current Month Performance</strong>
-              <vue-apex-charts
-                type="polarArea"
-                width="100%"
-                height="400px"
-                :options="polarOptions.chartOptions"
-                :series="polarOptions.series"
-              ></vue-apex-charts>
-            </div>
-            <div class="col-6 q-pt-lg q-px-md">
-              <strong class="text-h5">Meters Not Responded</strong>
-              <vue-apex-charts
-                type="bar"
-                width="100%"
-                height="400px"
-                :options="barOptions.chartOptions"
-                :series="barOptions.series"
-              ></vue-apex-charts>
-            </div>
-          </div>
-        </div>
-        <div class="col-3">
-          <div class="bg-grey-2 q-px-md" style="height: 100%">
-            <q-card class="bg-white q-px-sm q-py-sm q-pb-md">
-              <div class="row">
-                <div
-                  class="col-6 q-pb-md q-pt-md text-center border-right-bottom"
-                >
-                  <q-icon name="paid" color="secondary" size="30px"></q-icon>
-                  <span class="block">Weekly Performance</span>
-                  <strong class="block text-h5 text-bold text-primary"
-                    >99.51%</strong
-                  >
-                  <p class="q-mb-none">
-                    <q-icon
-                      name="trending_up"
-                      class="q-mr-xs"
-                      color="green-14"
-                    ></q-icon
-                    ><b class="text-green-14">0.17%</b> vs last week
-                  </p>
-                </div>
-                <div class="col-6 q-pb-md q-pt-md text-center border-bottom">
-                  <q-icon name="euro" color="secondary" size="30px"></q-icon>
-                  <span class="block">Meters Not Responded</span>
-                  <strong class="block text-h5 text-bold text-primary"
-                    >34.44%</strong
-                  >
-                  <p class="q-mb-none">
-                    <q-icon
-                      name="trending_down"
-                      class="q-mr-xs"
-                      color="red-10"
-                    ></q-icon
-                    ><b class="text-red-10">0.27%</b> vs last week
-                  </p>
-                </div>
-                <div class="col-6 q-pb-md q-pt-md text-center border-right">
-                  <q-icon
-                    name="currency_yuan"
-                    color="secondary"
-                    size="30px"
-                  ></q-icon>
-                  <span class="block">8 hours SLA</span>
-                  <strong class="block text-h5 text-bold text-primary"
-                    >33.22%</strong
-                  >
-                  <p class="q-mb-none">
-                    <q-icon
-                      name="trending_up"
-                      class="q-mr-xs"
-                      color="green-14"
-                    ></q-icon
-                    ><b class="text-green-14">0.37%</b> vs last week
-                  </p>
-                </div>
-                <div class="col-6 q-pb-md q-pt-md text-center">
-                  <q-icon
-                    name="currency_franc"
-                    color="secondary"
-                    size="30px"
-                  ></q-icon>
-                  <span class="block">12 hours SLA</span>
-                  <strong class="block text-h5 text-bold text-primary"
-                    >56.34%</strong
-                  >
-                  <p class="q-mb-none">
-                    <q-icon
-                      name="trending_up"
-                      class="q-mr-xs"
-                      color="green-14"
-                    ></q-icon
-                    ><b class="text-green-14">0.07%</b> vs last week
-                  </p>
-                </div>
-              </div>
-            </q-card>
-            <q-card
-              class="bg-white text-center q-mt-md q-px-sm q-py-sm q-pb-md"
+        <div class="col-6">
+          <div class="glass-card">
+            <strong class="text-h5 q-pl-md"
+              >WMeters Not Responded % and Number</strong
             >
-              <span class="text-h6">My portfolios</span>
-              <p>Sign in to access your portfolio</p>
-              <q-btn
-                outline
-                rounded
-                color="accent"
-                class="q-mr-sm"
-                no-caps
-                label="Sign in"
-              />
-            </q-card>
+            <vue-apex-charts
+              width="100%"
+              height="400px"
+              :options="options"
+              :series="options.series"
+            ></vue-apex-charts>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="glass-card">
+            <strong class="text-h5 q-pl-md">8 hours SLA</strong>
+            <vue-apex-charts
+              width="100%"
+              height="400px"
+              :options="options"
+              :series="options.series"
+            ></vue-apex-charts>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="glass-card">
+            <strong class="text-h5 q-pl-md">12 hours SLA</strong>
+            <vue-apex-charts
+              width="100%"
+              height="400px"
+              :options="options"
+              :series="options.series"
+            ></vue-apex-charts>
           </div>
         </div>
       </div>
     </div>
+    <q-drawer
+      side="right"
+      class="analytic-bar"
+      width="350"
+      v-model="showAnalytic"
+      overlay
+    >
+      <div class="full-height">
+        <div
+          class="head q-pl-md q-pr-sm q-py-xs flex items-center justify-between"
+        >
+          <span class="text-h6">Analytics Dashboard</span>
+          <q-btn
+            flat
+            round
+            icon="sym_r_close"
+            @click="showAnalytic = false"
+          ></q-btn>
+        </div>
+        <div class="content q-px-md q-py-sm">
+          <span class="block bar-label q-mb-sm">Success Metrics</span>
+          <q-table
+            class="analytic-table q-mb-sm"
+            :rows="rows"
+            hide-pagination
+            flat
+            :columns="columns"
+          />
+          <span class="block text-negative" style="font-size: 16px"
+            >Failures: 2.1%</span
+          >
+          <span class="block bar-label q-mb-sm">Failures - Why</span>
+          <p>Why smart meters couldn't send block load data to HES/MDM</p>
+          <div class="block-graph flex items-center q-mb-md">
+            <div class="graph-legend">
+              <span>
+                <q-icon
+                  name="sym_r_wifi"
+                  size="18px"
+                  color="dark"
+                  class="q-mr-sm"
+                ></q-icon>
+                Communication: 1.6%
+              </span>
+              <span>
+                <q-icon
+                  name="sym_r_settings"
+                  color="negative"
+                  class="q-mr-sm"
+                  size="18px"
+                ></q-icon>
+                MNR: 0.5%
+              </span>
+            </div>
+            <div class="graph-holder">
+              <vue-apex-charts
+                width="100%"
+                height="150px"
+                :options="analyticOptions.chartOptions"
+                :series="analyticOptions.series"
+              ></vue-apex-charts>
+            </div>
+          </div>
+          <span class="block bar-label q-mb-sm">Top Non-Responding Meters</span>
+          <q-table
+            class="analytic-table q-mb-md"
+            :rows="rows2"
+            hide-pagination
+            flat
+            :columns="columns2"
+          />
+          <span class="block bar-label q-mb-sm">Last 7 Days Trend</span>
+          <div class="block-graph q-mb-md">
+            <vue-apex-charts
+              width="100%"
+              height="150px"
+              :options="analyticLineOptions.chartOptions"
+              :series="analyticLineOptions.series"
+            ></vue-apex-charts>
+          </div>
+          <q-btn color="primary" class="full-width"><q-icon name="sym_r_download"></q-icon>Download report</q-btn>
+        </div>
+      </div>
+    </q-drawer>
   </q-page>
 </template>
 
@@ -272,6 +212,54 @@ export default defineComponent({
   },
   data() {
     return {
+      columns: [
+        { name: "what", label: "What?", field: "what", align: "left" },
+        { name: "today", label: "Today %", field: "today" },
+        { name: "mtd", label: "MTD %", field: "mtd" },
+      ],
+      rows: [
+        { what: "System Performance", today: 97.9, mtd: "98.1" },
+        { what: "<8 hours", today: 1.8, mtd: "1.3" },
+        { what: "<12 hours", today: 0.8, mtd: "0.6" },
+      ],
+      rows2: [
+        {
+          meter: "MT001234",
+          location: "Block A-12",
+          date: "2024-03-15 14:30",
+          issue: 2,
+        },
+        {
+          meter: "MT001257",
+          location: "Block B-05",
+          date: "2024-03-15 14:23",
+          issue: 5,
+        },
+        {
+          meter: "MT001987",
+          location: "Block A-2",
+          date: "2024-03-15 14:35",
+          issue: 6,
+        },
+      ],
+      columns2: [
+        { name: "meter", label: "Meter ID", field: "meter", align: "left" },
+        {
+          name: "location",
+          label: "Location",
+          field: "location",
+          align: "left",
+        },
+        {
+          name: "date",
+          label: "Last Data Received",
+          field: "date",
+          align: "left",
+        },
+        { name: "issue", label: "Issue Count", field: "issue", align: "left" },
+      ],
+      showAnalytic: false,
+      showFilters: true,
       options: {
         series: [
           {
@@ -558,6 +546,7 @@ export default defineComponent({
           id: "area-datetime",
           type: "area",
           height: 350,
+          foreColor: "#fff",
           toolbar: {
             tools: {
               selection: false,
@@ -570,39 +559,14 @@ export default defineComponent({
             autoScaleYaxis: true,
           },
         },
-        annotations: {
-          yaxis: [
-            {
-              y: 30,
-              borderColor: "#999",
-              label: {
-                show: true,
-                text: "Support",
-                style: {
-                  color: "#fff",
-                  background: "#00E396",
-                },
-              },
-            },
-          ],
-          xaxis: [
-            {
-              x: new Date("14 Nov 2012").getTime(),
-              borderColor: "#999",
-              yAxisIndex: 0,
-              label: {
-                show: true,
-                text: "Rally",
-                style: {
-                  color: "#fff",
-                  background: "#775DD0",
-                },
-              },
-            },
-          ],
+        grid: {
+          borderColor: "#438bca",
         },
         dataLabels: {
           enabled: false,
+          style: {
+            fontSize: "40px",
+          },
         },
         markers: {
           size: 0,
@@ -611,7 +575,15 @@ export default defineComponent({
         xaxis: {
           type: "datetime",
           min: new Date("01 Mar 2012").getTime(),
-          tickAmount: 6,
+          tickAmount: 1,
+          axisBorder: {
+            show: true,
+            color: "#438bca",
+          },
+          axisTicks: {
+            show: true,
+            color: "#438bca",
+          },
         },
         tooltip: {
           x: {
@@ -619,78 +591,75 @@ export default defineComponent({
           },
         },
         stroke: {
-          width: 1,
-          colors: ["#037b66"],
+          width: 2,
+          colors: ["#63eff8"],
         },
         fill: {
           type: "gradient",
-          colors: ["#037b66", "#FFFFFF"],
+          colors: ["#2c82c2", "#FFF"],
           gradient: {
             shadeIntensity: 1,
 
-            opacityFrom: 0.7,
-            opacityTo: 0.9,
+            opacityFrom: 0.9,
+            opacityTo: 0.1,
             stops: [0, 100],
           },
         },
       },
-      polarOptions: {
-        series: [42, 47, 52, 58, 65],
+      analyticOptions: {
+        series: [76.19, 23.81],
         chartOptions: {
           chart: {
             width: 380,
-            type: "polarArea",
-          },
-          labels: ["Item A", "Item B", "Item C", "Item D", "Item E"],
-          fill: {
-            opacity: 1,
+            type: "donut",
           },
           stroke: {
+            show: true,
             width: 1,
-            colors: undefined,
-          },
-          yaxis: {
-            show: false,
-          },
-          legend: {
-            position: "bottom",
+            colors: ["#6196c0"],
           },
           plotOptions: {
-            polarArea: {
-              rings: {
-                strokeWidth: 0,
-              },
-              spokes: {
-                strokeWidth: 0,
+            pie: {
+              donut: {
+                size: "60%",
               },
             },
           },
-          theme: {
-            monochrome: {
-              enabled: true,
-              color: "#037b66",
-              shadeTo: "light",
-              shadeIntensity: 0.6,
-            },
+
+          dataLabels: {
+            enabled: false,
           },
+          colors: ["#24649c", "#C0392B"],
+          legend: {
+            show: false,
+          },
+          responsive: [
+            {
+              breakpoint: 480,
+              options: {
+                chart: {
+                  width: 200,
+                },
+                legend: {
+                  position: "bottom",
+                },
+              },
+            },
+          ],
         },
       },
-      barOptions: {
+      analyticLineOptions: {
         series: [
           {
-            name: "Cash Flow",
-            data: [
-              1.45, 5.42, 5.9, -0.42, -12.6, -18.1, -18.2, -14.16, -11.1, -6.09,
-              0.34, 3.88, 13.07, 5.8, 2, 7.37, 8.1, 13.57, 15.75, 17.1, 19.8,
-              -27.03, -54.4, -47.2, -43.3, -18.6, -48.6, -41.1, -39.6, -37.6,
-              -29.4, -21.4, -2.4,
-            ],
+            name: "series1",
+            data: [31, 40, 28, 51, 42, 109, 100],
           },
         ],
         chartOptions: {
           chart: {
-            type: "bar",
             height: 350,
+            type: "area",
+            foreColor: "#fff",
             toolbar: {
               tools: {
                 selection: false,
@@ -699,88 +668,45 @@ export default defineComponent({
                 zoom: false,
               },
             },
-          },
-          plotOptions: {
-            bar: {
-              colors: {
-                ranges: [
-                  {
-                    from: 0,
-                    to: 10,
-                    color: "#037b66",
-                  },
-                  {
-                    from: 10,
-                    to: 30,
-                    color: "#ffd166",
-                  },
-                  {
-                    from: -100,
-                    to: -46,
-                    color: "#037b66",
-                  },
-                  {
-                    from: -45,
-                    to: 0,
-                    color: "#6de1c2",
-                  },
-                ],
-              },
-              columnWidth: "80%",
+            zoom: {
+              autoScaleYaxis: true,
             },
           },
           dataLabels: {
             enabled: false,
           },
-          yaxis: {
-            title: {
-              text: "Growth",
-            },
-            labels: {
-              formatter: function (y) {
-                return y.toFixed(0) + "%";
-              },
+          grid: {
+            borderColor: "#438bca",
+          },
+          stroke: {
+            width: 2,
+            colors: ["#63eff8"],
+          },
+          fill: {
+            type: "gradient",
+            colors: ["#2c82c2", "#FFF"],
+            gradient: {
+              shadeIntensity: 1,
+              opacityFrom: 0.9,
+              opacityTo: 0.1,
+              stops: [0, 100],
             },
           },
           xaxis: {
             type: "datetime",
             categories: [
-              "2011-01-01",
-              "2011-02-01",
-              "2011-03-01",
-              "2011-04-01",
-              "2011-05-01",
-              "2011-06-01",
-              "2011-07-01",
-              "2011-08-01",
-              "2011-09-01",
-              "2011-10-01",
-              "2011-11-01",
-              "2011-12-01",
-              "2012-01-01",
-              "2012-02-01",
-              "2012-03-01",
-              "2012-04-01",
-              "2012-05-01",
-              "2012-06-01",
-              "2012-07-01",
-              "2012-08-01",
-              "2012-09-01",
-              "2012-10-01",
-              "2012-11-01",
-              "2012-12-01",
-              "2013-01-01",
-              "2013-02-01",
-              "2013-03-01",
-              "2013-04-01",
-              "2013-05-01",
-              "2013-06-01",
-              "2013-07-01",
-              "2013-08-01",
-              "2013-09-01",
+              "2018-09-19T00:00:00.000Z",
+              "2018-09-19T01:30:00.000Z",
+              "2018-09-19T02:30:00.000Z",
+              "2018-09-19T03:30:00.000Z",
+              "2018-09-19T04:30:00.000Z",
+              "2018-09-19T05:30:00.000Z",
+              "2018-09-19T06:30:00.000Z",
             ],
-            labels: {
-              rotate: -90,
+          },
+          tooltip: {
+            x: {
+              format: "dd/MM/yy HH:mm",
             },
           },
         },
@@ -791,17 +717,61 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.border-bottom {
-  border-bottom: dashed;
-  border-color: #eee;
+.body-background {
+  background: rgb(0, 60, 126);
+  background: radial-gradient(
+    circle,
+    rgba(0, 60, 126, 1) 0%,
+    rgba(48, 115, 167, 1) 0%,
+    rgba(0, 60, 126, 1) 100%
+  );
+  color: #fff;
 }
-.border-right {
-  border-right: dashed;
-  border-color: #eee;
+.glass-card {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  backdrop-filter: blur(10px); /* Эффект размытия */
+  border-radius: 12px; /* Закругленные углы */
 }
-.border-right-bottom {
-  border-bottom: dashed;
-  border-right: dashed;
-  border-color: #eee;
+.sla {
+  .q-field--outlined .q-field__control:before {
+    border: 1px solid #2e6da4;
+  }
+}
+.analytic-bar {
+  background: rgb(0, 60, 126);
+  border-left: 1px solid #438bca;
+  .head {
+    border-bottom: 1px solid #438bca;
+  }
+}
+.bar-label {
+  font-size: 18px;
+}
+.analytic-table {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+.q-table thead,
+.q-table tr,
+.q-table th,
+.q-table td {
+  border-color: #2e6da4;
+}
+.block-graph {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 8px;
+  border-radius: 14px;
+  .graph-holder {
+    width: 40%;
+  }
+  .graph-legend {
+    width: 60%;
+
+    span {
+      display: flex;
+      align-items: center;
+    }
+  }
 }
 </style>

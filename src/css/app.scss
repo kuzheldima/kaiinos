@@ -1,1 +1,12 @@
 // app global css in SCSS form
+:deep(.q-field__append .q-icon) {
+    color: #fff;
+  }
+
+  .apexcharts-menu-icon svg, .apexcharts-reset-icon svg, .apexcharts-zoom-icon svg, .apexcharts-zoomin-icon svg, .apexcharts-zoomout-icon svg {
+    fill: #fff !important;
+  }
+
+.q-select__dropdown-icon {
+    color: #fff;
+}
