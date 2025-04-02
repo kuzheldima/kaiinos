@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-header elevated>
       <q-toolbar class="flex main-bar q-py-md">
-        <strong class="text-white text-h5 q-mr-lg">Smart Utility Manager</strong>
+        <strong class="text-white text-h5 q-mr-lg"><b class="text-primary">S</b>mart <b class="text-primary">U</b>tility <b class="text-primary">M</b>anager</strong>
         <q-input rounded outlined label-color="white" v-model="search" class="search-field q-ml-auto q-mr-md" dense label="Search">
           <template v-slot:append>
             <q-btn
@@ -15,6 +15,7 @@
           </template>
         </q-input>
         <div class="btns">
+          <q-btn class="q-mx-sm" outline round color="accent" no-caps icon="notifications" style="min-height: 35px; min-width: 35px;" />
           <q-btn outline round color="accent" no-caps icon="person" style="min-height: 35px; min-width: 35px;" />
         </div>
       </q-toolbar>

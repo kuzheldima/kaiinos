@@ -1,12 +1,13 @@
 <template>
   <q-page class="body-background sla">
-    <div class="full-width flex items-center justify-between q-px-md q-py-xs">
+    <div class="full-width flex items-center q-px-md q-py-xs">
       <div class="breadcrumbs">
         <q-breadcrumbs>
           <q-breadcrumbs-el label="Home" />
           <q-breadcrumbs-el label="Block Load Data" />
         </q-breadcrumbs>
       </div>
+      <span class="q-ml-auto q-mr-lg" style="color:#909bc7">Last data received: Apr2,2025 21:45</span>
       <div class="btns-group">
         <q-btn
           flat
@@ -68,8 +69,8 @@
       <div class="row wrap q-col-gutter-md q-px-md q-pb-md">
         <div class="col-3">
           <div class="card-holder flex column items-center">
-            <img width="50px" :src="$options.weekly" alt="" />
-            <span>Weekly Performance</span>
+            <img width="30px" :src="$options.weekly" alt="" />
+            <span>Performance</span>
             <strong>98.73%</strong>
             <p class="flex items-center q-mb-none">
               <q-icon name="trending_down" color="negative" size="20px"></q-icon
@@ -79,7 +80,7 @@
         </div>
         <div class="col-3">
           <div class="card-holder flex column items-center">
-            <img width="50px" :src="$options.meter" alt="" />
+            <img width="30px" :src="$options.meter" alt="" />
             <span>Meters Not Responded</span>
             <strong>4.22%</strong>
             <p class="flex items-center q-mb-none">
@@ -90,7 +91,7 @@
         </div>
         <div class="col-3">
           <div class="card-holder flex column items-center">
-            <img width="50px" :src="$options.sla" alt="" />
+            <img width="30px" :src="$options.sla" alt="" />
             <span>8 hours SLA</span>
             <strong>90.06%</strong>
             <p class="flex items-center q-mb-none">
@@ -101,7 +102,7 @@
         </div>
         <div class="col-3">
           <div class="card-holder flex column items-center">
-            <img width="50px" :src="$options.sla" alt="" />
+            <img width="30px" :src="$options.sla" alt="" />
             <span>12 hours SLA</span>
             <strong>94.51%</strong>
             <p class="flex items-center q-mb-none">
@@ -114,7 +115,7 @@
       <div class="row wrap q-col-gutter-md q-px-md q-pb-md">
         <div class="col-6">
           <div class="glass-card">
-            <strong class="text-h5 q-pl-md">Weekly Performance</strong>
+            <strong class="text-h5 q-pl-md">Performance</strong>
             <vue-apex-charts
               width="100%"
               height="400px"
@@ -126,7 +127,7 @@
         <div class="col-6">
           <div class="glass-card">
             <strong class="text-h5 q-pl-md"
-              >WMeters Not Responded % and Number</strong
+              >Meters Not Responded</strong
             >
             <vue-apex-charts
               width="100%"
@@ -161,11 +162,12 @@
       </div>
       <div class="row wrap q-col-gutter-md q-px-md q-pb-md">
         <div class="col-6">
-          <q-expansion-item expand-separator label="Impact">
-            <div class="row wrap q-col-gutter-md q-pt-lg q-px-md q-pb-md">
+          <div class="impact">
+            <span class="block text-h5">Impact</span>
+            <div class="row wrap q-col-gutter-md q-pt-lg q-px-xs q-pb-md">
               <div class="col-6">
                 <div class="item-holder">
-                  <span>Revenue loss, $</span>
+                  <span>Revenue loss</span>
                   <vue-apex-charts
                     width="100%"
                     height="350px"
@@ -176,18 +178,18 @@
               </div>
               <div class="col-6">
                 <div class="item-holder">
-                  <span>Revenue loss, MV</span>
+                  <span>Revenue loss</span>
                   <vue-apex-charts
                     width="100%"
                     height="350px"
-                    :options="radialOptions"
-                    :series="radialOptions.series"
+                    :options="radialOptions2"
+                    :series="radialOptions2.series"
                   ></vue-apex-charts>
                 </div>
               </div>
               <div class="col-12">
                 <div class="item-holder linear">
-                  <span>90% loss by consumers</span>
+                  <span>Top loss by category</span>
                   <div class="flex no-wrap items-center">
                     <span class="linear-title" style="min-width: 100px"
                       >Railway</span
@@ -230,11 +232,13 @@
                 </div>
               </div>
               <div class="col-8">
-                <div class="item-holder">
-                  <span>MNR</span>
-                  <p class="q-mb-xs">% of revenue - 12%</p>
-                  <p class="q-mb-xs">Amount lost - 3752$</p>
-                  <p class="q-mb-xs">Units lost - 42MW</p>
+                <div class="item-holder meters">
+                  <span>Meters</span>
+                  <div class="meters-holder">
+                    <p class="q-mb-xs">% of revenue - <b>12%</b></p>
+                    <p class="q-mb-xs">Amount lost - <b>3752$</b></p>
+                    <p class="q-mb-xs">Units lost - <b>42MW</b></p>
+                  </div>
                 </div>
               </div>
               <div class="col-4">
@@ -246,48 +250,21 @@
                 </div>
               </div>
             </div>
-          </q-expansion-item>
+          </div>
         </div>
         <div class="col-6">
-          <q-expansion-item expand-separator label="Suggestions">
-            <div class="row wrap q-col-gutter-md q-pt-lg q-px-md q-pb-md">
+          <div class="impact">
+            <span class="block text-h5">Suggestions</span>
+            <div class="row wrap q-col-gutter-md q-pt-lg q-px-xs q-pb-md">
               <div class="col-12">
                 <div class="suggestion-card">
                   <div class="suggestion-header">
                     <span class="impact-label high">High Impact</span>
-                    <q-btn
-                    class="q-ml-auto"
-                      color="primary"
-                      label="Create ticket"
-                      no-caps
-                    ></q-btn>
                   </div>
-                  <p class="suggestion-text">
-                    Replace 128 meters in zones A and B
-                  </p>
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="suggestion-card">
-                  <div class="suggestion-header">
-                    <span class="impact-label quick-fix">Quick Fix</span>
-                    <q-btn
-                    class="q-ml-auto"
-                      color="primary"
-                      label="Create ticket"
-                      no-caps
-                    ></q-btn>
-                  </div>
-                  <p class="suggestion-text">
-                    Check collector connectivity with Airtel
-                  </p>
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="suggestion-card high-impact">
-                  <div class="suggestion-header">
-                    <span class="impact-label high">High Impact</span>
-                    <span class="impact-label quick-fix">Quick Fix</span>
+                  <div class="flex items-end">
+                    <p class="suggestion-text q-mb-none">
+                      Replace 128 meters in zones A and B
+                    </p>
                     <q-btn
                       class="q-ml-auto"
                       color="primary"
@@ -295,13 +272,47 @@
                       no-caps
                     ></q-btn>
                   </div>
-                  <p class="suggestion-text">
-                    Replace SIM cards in 78 meters to Vodafone
-                  </p>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="suggestion-card">
+                  <div class="suggestion-header">
+                    <span class="impact-label quick-fix">Quick Fix</span>
+                  </div>
+                  <div class="flex items-end">
+                    <p class="suggestion-text q-mb-none">
+                      Check collector connectivity with Airtel
+                    </p>
+                    <q-btn
+                      class="q-ml-auto"
+                      color="primary"
+                      label="Create ticket"
+                      no-caps
+                    ></q-btn>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="suggestion-card high-impact">
+                  <div class="suggestion-header">
+                    <span class="impact-label high">High Impact</span>
+                    <span class="impact-label quick-fix">Quick Fix</span>
+                  </div>
+                  <div class="flex items-end">
+                    <p class="suggestion-text q-mb-none">
+                      Replace SIM cards in 78 meters to Vodafone
+                    </p>
+                    <q-btn
+                      class="q-ml-auto"
+                      color="primary"
+                      label="Create ticket"
+                      no-caps
+                    ></q-btn>
+                  </div>
                 </div>
               </div>
             </div>
-          </q-expansion-item>
+          </div>
         </div>
       </div>
     </div>
@@ -932,7 +943,81 @@ export default defineComponent({
               },
               value: {
                 formatter: function (val) {
-                  return val;
+                  return val + "$";
+                },
+                fontSize: "28px", // ✅ Adjust size of "67"
+                fontWeight: "bold",
+                color: "#ffffff", // ✅ Adjust color if needed
+                show: true, // ✅ Shows only the value
+                offsetY: -20,
+              },
+            },
+          },
+        },
+        fill: {
+          type: "gradient",
+          gradient: {
+            type: "horizontal", // Can be "horizontal" or "vertical"
+            shadeIntensity: 1,
+            gradientToColors: ["#27AE60", "#ffd166", "#ff8548", "#C0392B"],
+            inverseColors: false,
+            opacityFrom: 1,
+            opacityTo: 1,
+            stops: [0, 50, 75, 100], // Defines color transition points
+            colorStops: [
+              { offset: 0, color: "#27AE60", opacity: 1 }, // Green
+              { offset: 50, color: "#ffd166", opacity: 1 }, // Yellow
+              { offset: 75, color: "#ff8548", opacity: 1 }, // Orange
+              { offset: 100, color: "#C0392B", opacity: 1 }, // Red
+            ],
+          },
+        },
+        stroke: {
+          dashArray: 3,
+        },
+        annotations: {
+          position: "back",
+          texts: [
+            {
+              text: "Low", // Start label
+              x: "15%",
+              y: "50%",
+              textAnchor: "middle",
+              foreColor: "#fff",
+            },
+            {
+              text: "High", // End label
+              x: "85%",
+              y: "50%",
+              textAnchor: "middle",
+              foreColor: "#fff",
+            },
+          ],
+        },
+      },
+      radialOptions2: {
+        series: [78],
+        chart: {
+          type: "radialBar",
+          background: "transparent",
+        },
+        plotOptions: {
+          radialBar: {
+            hollow: {
+              size: "50%",
+            },
+            startAngle: -90,
+            endAngle: 90,
+            track: {
+              background: "rgba(255, 255, 255, 0.1)",
+            },
+            dataLabels: {
+              name: {
+                show: false, // ✅ Hides "Median Ratio"
+              },
+              value: {
+                formatter: function (val) {
+                  return val + "MV";
                 },
                 fontSize: "28px", // ✅ Adjust size of "67"
                 fontWeight: "bold",
@@ -1048,21 +1133,10 @@ export default defineComponent({
   }
 }
 
-.q-expansion-item {
+.impact {
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 14px;
-
-  .q-item__section--side > .q-icon {
-    color: #fff;
-  }
-
-  .q-item__label {
-    font-size: 24px;
-  }
-
-  .q-focus-helper {
-    border-radius: 14px !important;
-  }
+  padding: 14px;
 }
 
 .item-holder {
@@ -1086,7 +1160,7 @@ export default defineComponent({
 }
 
 .card-holder {
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.15);
   color: #fff;
   padding: 15px;
   border-radius: 12px;
@@ -1126,7 +1200,7 @@ export default defineComponent({
   background: rgba(255, 200, 0, 0.2);
   padding: 5px 10px;
   border-radius: 6px;
-  font-size: 14px;
+  font-size: 10px;
   margin-right: 5px;
 
   &.high {
@@ -1137,5 +1211,19 @@ export default defineComponent({
     background: rgba(47, 169, 36, 0.2);
   }
 }
-
+.q-linear-progress__model {
+  border-radius: 8px;
+}
+.meters {
+  .meters-holder {
+    display: inline-block;
+  }
+  p {
+    display: flex;
+  }
+  font-size: 16px;
+  b {
+    margin-left: auto;
+  }
+}
 </style>
