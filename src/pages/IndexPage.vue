@@ -7,9 +7,11 @@
           <q-breadcrumbs-el label="Block Load Data" />
         </q-breadcrumbs>
       </div>
-      <span class="q-ml-auto q-mr-lg" style="color:#909bc7">Last data received: Apr2,2025 21:45</span>
+      <span class="q-ml-auto q-mr-lg" style="color: #909bc7"
+        >Last data received: Apr2,2025 21:45</span
+      >
       <div class="btns-group">
-        <q-btn
+        <!-- <q-btn
           flat
           round
           :icon="showFilters ? 'filter_alt_off' : 'filter_alt'"
@@ -18,7 +20,7 @@
           <q-tooltip>{{
             showFilters ? "Hide filters" : "Show filters"
           }}</q-tooltip>
-        </q-btn>
+        </q-btn> -->
         <q-btn flat round icon="sym_r_monitoring" @click="showAnalytic = true">
           <q-tooltip>Show analytic</q-tooltip>
         </q-btn>
@@ -27,7 +29,7 @@
     <div class="full-width">
       <div
         v-if="showFilters"
-        class="row wrap q-gutter-md q-pr-md full-width q-pb-md"
+        class="row wrap items-center q-gutter-md q-pr-md full-width q-pb-md"
       >
         <div class="col">
           <q-select
@@ -61,7 +63,13 @@
             label="Date range"
           ></q-select>
         </div>
-        <q-btn color="primary" label="Apply filters" no-caps></q-btn>
+        <q-btn
+          color="primary"
+          size="12px"
+          style="height: 38px"
+          label="Apply filters"
+          no-caps
+        ></q-btn>
         <q-btn flat :ripple="false" round icon="restart_alt">
           <q-tooltip>Reset</q-tooltip>
         </q-btn>
@@ -115,25 +123,107 @@
       <div class="row wrap q-col-gutter-md q-px-md q-pb-md">
         <div class="col-6">
           <div class="glass-card">
-            <strong class="text-h5 q-pl-md">Performance</strong>
+            <div class="flex items-center justify-between">
+              <strong class="text-h5 q-pl-md">Performance</strong>
+              <q-btn
+                @click="showFullScreen = true"
+                flat
+                round
+                class="q-ml-auto"
+                icon="fullscreen"
+              >
+                <q-tooltip>Full screen</q-tooltip>
+              </q-btn>
+            </div>
+            <div class="chart-btns full-width flex q-mt-sm q-pl-md">
+              <q-btn
+                :class="{ active: selection['chart'] === 'one_month' }"
+                color="0c1d44"
+                size="sm"
+                @click="filterChart('chart', 'one_month')"
+                label="1M"
+              ></q-btn>
+              <q-btn
+                :class="{ active: selection['chart'] === 'six_months' }"
+                color="0c1d44"
+                size="sm"
+                @click="filterChart('chart', 'six_months')"
+                label="6M"
+              ></q-btn>
+              <q-btn
+                :class="{ active: selection['chart'] === 'one_year' }"
+                color="0c1d44"
+                size="sm"
+                @click="filterChart('chart', 'one_year')"
+                label="1Y"
+              ></q-btn>
+              <q-btn
+                :class="{ active: selection['chart'] === 'all' }"
+                color="0c1d44"
+                size="sm"
+                @click="filterChart('chart', 'all')"
+                label="ALL"
+              ></q-btn>
+            </div>
             <vue-apex-charts
               width="100%"
               height="400px"
               :options="options"
               :series="options.series"
+              ref="chart"
             ></vue-apex-charts>
           </div>
         </div>
         <div class="col-6">
           <div class="glass-card">
-            <strong class="text-h5 q-pl-md"
-              >Meters Not Responded</strong
-            >
+            <div class="flex items-center justify-between">
+              <strong class="text-h5 q-pl-md">Meters Not Responded</strong>
+              <q-btn
+                @click="showFullScreen = true"
+                flat
+                round
+                class="q-ml-auto"
+                icon="fullscreen"
+              >
+                <q-tooltip>Full screen</q-tooltip>
+              </q-btn>
+            </div>
+            <div class="chart-btns full-width flex q-mt-sm q-pl-md">
+              <q-btn
+                :class="{ active: selection['chart2'] === 'one_month' }"
+                color="0c1d44"
+                size="sm"
+                @click="filterChart('chart2', 'one_month')"
+                label="1M"
+              ></q-btn>
+              <q-btn
+                :class="{ active: selection['chart2'] === 'six_months' }"
+                color="0c1d44"
+                size="sm"
+                @click="filterChart('chart2', 'six_months')"
+                label="6M"
+              ></q-btn>
+              <q-btn
+                :class="{ active: selection['chart2'] === 'one_year' }"
+                color="0c1d44"
+                size="sm"
+                @click="filterChart('chart2', 'one_year')"
+                label="1Y"
+              ></q-btn>
+              <q-btn
+                :class="{ active: selection['chart2'] === 'all' }"
+                color="0c1d44"
+                size="sm"
+                @click="filterChart('chart2', 'all')"
+                label="ALL"
+              ></q-btn>
+            </div>
             <vue-apex-charts
               width="100%"
               height="400px"
               :options="options"
               :series="options.series"
+              ref="chart2"
             ></vue-apex-charts>
           </div>
         </div>
@@ -170,7 +260,6 @@
                   <span>Revenue loss</span>
                   <vue-apex-charts
                     width="100%"
-                    height="350px"
                     :options="radialOptions"
                     :series="radialOptions.series"
                   ></vue-apex-charts>
@@ -178,10 +267,9 @@
               </div>
               <div class="col-6">
                 <div class="item-holder">
-                  <span>Revenue loss</span>
+                  <span>Units loss</span>
                   <vue-apex-charts
                     width="100%"
-                    height="350px"
                     :options="radialOptions2"
                     :series="radialOptions2.series"
                   ></vue-apex-charts>
@@ -235,9 +323,9 @@
                 <div class="item-holder meters">
                   <span>Meters</span>
                   <div class="meters-holder">
-                    <p class="q-mb-xs">% of revenue - <b>12%</b></p>
-                    <p class="q-mb-xs">Amount lost - <b>3752$</b></p>
-                    <p class="q-mb-xs">Units lost - <b>42MW</b></p>
+                    <p class="q-mb-xs">Revenue lost: <b>12%</b></p>
+                    <p class="q-mb-xs">Amount lost: <b>3752$</b></p>
+                    <p class="q-mb-xs">Units lost: <b>42MW</b></p>
                   </div>
                 </div>
               </div>
@@ -268,6 +356,7 @@
                     <q-btn
                       class="q-ml-auto"
                       color="primary"
+                      size="12px"
                       label="Create ticket"
                       no-caps
                     ></q-btn>
@@ -286,6 +375,7 @@
                     <q-btn
                       class="q-ml-auto"
                       color="primary"
+                      size="12px"
                       label="Create ticket"
                       no-caps
                     ></q-btn>
@@ -305,6 +395,7 @@
                     <q-btn
                       class="q-ml-auto"
                       color="primary"
+                      size="12px"
                       label="Create ticket"
                       no-caps
                     ></q-btn>
@@ -336,19 +427,28 @@
           ></q-btn>
         </div>
         <div class="content q-px-md q-py-sm">
-          <span class="block bar-label q-mb-sm">Success Metrics</span>
+          <span class="block bar-label q-mb-sm">Last 7 Days Trend</span>
+          <div class="block-graph-no-padding q-mb-md">
+            <vue-apex-charts
+              width="100%"
+              height="150px"
+              :options="timeOptions"
+              :series="timeOptions.series"
+            ></vue-apex-charts>
+          </div>
+          <span class="block bar-label q-mb-sm">Advanced Analytics</span>
           <q-table
-            class="analytic-table q-mb-sm"
+            class="analytic-table q-mb-xs"
             :rows="rows"
             hide-pagination
             flat
             :columns="columns"
+            dense
           />
-          <span class="block text-negative" style="font-size: 16px"
+          <span class="block text-negative q-mb-sm" style="font-size: 14px"
             >Failures: 2.1%</span
           >
-          <span class="block bar-label q-mb-sm">Failures - Why</span>
-          <p>Why smart meters couldn't send block load data to HES/MDM</p>
+          <span class="block bar-label q-mb-sm">Diagnosis</span>
           <div class="block-graph flex items-center q-mb-md">
             <div class="graph-legend">
               <span>
@@ -379,16 +479,70 @@
               ></vue-apex-charts>
             </div>
           </div>
-          <span class="block bar-label q-mb-sm">Top Non-Responding Meters</span>
-          <q-table
-            class="analytic-table q-mb-md"
-            :rows="rows2"
-            hide-pagination
-            flat
-            :columns="columns2"
-          />
-          <span class="block bar-label q-mb-sm">Last 7 Days Trend</span>
+          <span class="block bar-label q-mb-sm">Details</span>
           <div class="block-graph q-mb-md">
+            <strong style="font-size: 15px">Meters</strong>
+            <div class="flex items-center justify-between q-mb-sm">
+              <p class="q-mb-none">To replace or fix: 500 meters</p>
+              <q-btn
+                class="q-ml-auto"
+                color="primary"
+                size="10px"
+                label="Request service"
+                no-caps
+              ></q-btn>
+            </div>
+            <strong style="font-size: 15px">Communication</strong>
+            <div class="row communication q-mb-sm">
+              <div class="col">
+                <b style="color: #289df9">RF: 1% (1000 Meters)</b>
+                <span>HW: 0.3% (300)</span>
+                <span>Signal: 0.7% (700)</span>
+              </div>
+              <div class="col">
+                <b style="color: #49cec3">Cellular: 0.6% (589 Meters)</b>
+                <span>SIM: 0.2% (196)</span>
+                <span>Signal: 0.4% (393)</span>
+              </div>
+            </div>
+            <span class="block text-negative q-mb-sm" style="font-size: 14px"
+              >Meters non responding >2 days: 125</span
+            >
+            <div class="flex items-center justify-between q-mb-sm">
+              <p class="q-mb-none">Request service</p>
+              <q-btn
+                class="q-ml-auto"
+                color="primary"
+                size="10px"
+                label="Request service"
+                no-caps
+              ></q-btn>
+            </div>
+            <strong style="font-size: 15px">Software</strong>
+
+            <div class="meters-holder software block full-width q-mb-md">
+              <a href="#" class="q-mb-xs"
+                >Data Anomaly <b>0.03% (30 meters)</b></a
+              >
+              <a href="#" class="q-mb-xs"
+                >Validation Failures: <b>0.04% (40 meters)</b></a
+              >
+              <a href="#" class="q-mb-xs"
+                >Data Loss :<b>0.03% (30 meters)</b></a
+              >
+            </div>
+            <div class="flex items-center justify-between q-mb-sm">
+              <q-btn
+                class="q-ml-auto"
+                color="primary"
+                size="10px"
+                label="Request service"
+                no-caps
+              ></q-btn>
+            </div>
+          </div>
+          <span class="block bar-label q-mb-sm">Last 7 Days Trend</span>
+          <div class="block-graph-no-padding q-mb-md">
             <vue-apex-charts
               width="100%"
               height="150px"
@@ -403,6 +557,67 @@
       </div>
     </q-drawer>
   </q-page>
+  <q-dialog
+    v-model="showFullScreen"
+    persistent
+    maximized
+    transition-show="slide-up"
+    transition-hide="slide-down"
+  >
+    <q-card class="full-screen-chart text-white">
+      <q-bar class="flex items-center justify-between q-py-lg">
+        <span class="text-h5">Performance</span>
+        <q-btn
+          @click="showFullScreen = false"
+          flat
+          round
+          class="q-ml-auto"
+          icon="close"
+        >
+          <q-tooltip>Close</q-tooltip>
+        </q-btn>
+      </q-bar>
+      <q-card-section class="q-py-lg q-px-lg">
+        <div class="chart-btns full-width flex q-mt-sm q-pl-md">
+          <q-btn
+            :class="{ active: selection['chart'] === 'one_month' }"
+            color="0c1d44"
+            size="sm"
+            @click="filterChart('chart', 'one_month')"
+            label="1M"
+          ></q-btn>
+          <q-btn
+            :class="{ active: selection['chart'] === 'six_months' }"
+            color="0c1d44"
+            size="sm"
+            @click="filterChart('chart', 'six_months')"
+            label="6M"
+          ></q-btn>
+          <q-btn
+            :class="{ active: selection['chart'] === 'one_year' }"
+            color="0c1d44"
+            size="sm"
+            @click="filterChart('chart', 'one_year')"
+            label="1Y"
+          ></q-btn>
+          <q-btn
+            :class="{ active: selection['chart'] === 'all' }"
+            color="0c1d44"
+            size="sm"
+            @click="filterChart('chart', 'all')"
+            label="ALL"
+          ></q-btn>
+        </div>
+        <vue-apex-charts
+          width="100%"
+          height="600px"
+          :options="options"
+          :series="options.series"
+          ref="chart"
+        ></vue-apex-charts>
+      </q-card-section>
+    </q-card>
+  </q-dialog>
 </template>
 
 <script>
@@ -420,53 +635,59 @@ export default defineComponent({
   weekly,
   meter,
   sla,
+  methods: {
+    filterChart(chart, timeline) {
+      {
+        this.selection[chart] = timeline;
+
+        switch (timeline) {
+          case "one_month":
+            this.$refs[chart].zoomX(
+              new Date("28 Jan 2013").getTime(),
+              new Date("27 Feb 2013").getTime()
+            );
+            break;
+          case "six_months":
+            this.$refs[chart].zoomX(
+              new Date("27 Sep 2012").getTime(),
+              new Date("27 Feb 2013").getTime()
+            );
+            break;
+          case "one_year":
+            this.$refs[chart].zoomX(
+              new Date("27 Feb 2012").getTime(),
+              new Date("27 Feb 2013").getTime()
+            );
+            break;
+          case "all":
+            this.$refs[chart].zoomX(
+              new Date("23 Jan 2012").getTime(),
+              new Date("27 Feb 2013").getTime()
+            );
+            break;
+          default:
+        }
+      }
+    },
+  },
   data() {
     return {
+      showFullScreen: false,
+      selection: {
+        chart: "one_year",
+        chart2: "one_year",
+      },
       columns: [
-        { name: "what", label: "What?", field: "what", align: "left" },
+        { name: "what", label: "", field: "what", align: "left" },
         { name: "today", label: "Today %", field: "today" },
         { name: "mtd", label: "MTD %", field: "mtd" },
       ],
       rows: [
         { what: "System Performance", today: 97.9, mtd: "98.1" },
-        { what: "<8 hours", today: 1.8, mtd: "1.3" },
+        { what: "Faliures", today: 2.1, mtd: "1.9" },
+        { what: "0-8 hours", today: 1.8, mtd: "1.3" },
+        { what: "8-12 hours", today: 1.9, mtd: "1.6" },
         { what: "<12 hours", today: 0.8, mtd: "0.6" },
-      ],
-      rows2: [
-        {
-          meter: "MT001234",
-          location: "Block A-12",
-          date: "2024-03-15 14:30",
-          issue: 2,
-        },
-        {
-          meter: "MT001257",
-          location: "Block B-05",
-          date: "2024-03-15 14:23",
-          issue: 5,
-        },
-        {
-          meter: "MT001987",
-          location: "Block A-2",
-          date: "2024-03-15 14:35",
-          issue: 6,
-        },
-      ],
-      columns2: [
-        { name: "meter", label: "Meter ID", field: "meter", align: "left" },
-        {
-          name: "location",
-          label: "Location",
-          field: "location",
-          align: "left",
-        },
-        {
-          name: "date",
-          label: "Last Data Received",
-          field: "date",
-          align: "left",
-        },
-        { name: "issue", label: "Issue Count", field: "issue", align: "left" },
       ],
       showAnalytic: false,
       showFilters: true,
@@ -755,7 +976,6 @@ export default defineComponent({
         chart: {
           id: "area-datetime",
           type: "area",
-          height: 350,
           foreColor: "#fff",
           toolbar: {
             tools: {
@@ -945,11 +1165,11 @@ export default defineComponent({
                 formatter: function (val) {
                   return val + "$";
                 },
-                fontSize: "28px", // ✅ Adjust size of "67"
+                fontSize: "20px", // ✅ Adjust size of "67"
                 fontWeight: "bold",
                 color: "#ffffff", // ✅ Adjust color if needed
                 show: true, // ✅ Shows only the value
-                offsetY: -20,
+                offsetY: 0,
               },
             },
           },
@@ -1017,13 +1237,13 @@ export default defineComponent({
               },
               value: {
                 formatter: function (val) {
-                  return val + "MV";
+                  return val + "MVW";
                 },
-                fontSize: "28px", // ✅ Adjust size of "67"
+                fontSize: "20px", // ✅ Adjust size of "67"
                 fontWeight: "bold",
                 color: "#ffffff", // ✅ Adjust color if needed
                 show: true, // ✅ Shows only the value
-                offsetY: -20,
+                offsetY: 0,
               },
             },
           },
@@ -1069,13 +1289,62 @@ export default defineComponent({
           ],
         },
       },
+      timeOptions: {
+        series: [
+          {
+            data: [0, -41, 35, -51, 0, 62, -69, 32, -32, 54, 16, -50],
+          },
+        ],
+        chart: {
+          type: "area",
+          foreColor: "#fff",
+          zoom: {
+            enabled: false,
+          },
+        },
+        grid: {
+          borderColor: "#438bca",
+        },
+        dataLabels: {
+          enabled: false,
+        },
+        xaxis: {
+          categories: [
+            "00",
+            "01",
+            "02",
+            "03",
+            "04",
+            "05",
+            "06",
+            "07",
+            "08",
+            "09",
+            "10",
+            "11",
+          ],
+        },
+        stroke: {
+          width: 0,
+        },
+        plotOptions: {
+          line: {
+            colors: {
+              threshold: 0,
+              colorAboveThreshold: "#077ad3",
+              colorBelowThreshold: "#cd1806",
+            },
+          },
+        },
+      },
     };
   },
 });
 </script>
 
 <style lang="scss">
-.body-background {
+.body-background,
+.full-screen-chart {
   background: rgb(0, 60, 126);
   background: radial-gradient(
     circle,
@@ -1097,7 +1366,11 @@ export default defineComponent({
   }
 }
 .analytic-bar {
-  background: rgb(0, 60, 126);
+  background: linear-gradient(
+    180deg,
+    #004276,
+    #0c1d44
+  ); /* Темно-синий градиент */
   border-left: 1px solid #438bca;
   .head {
     border-bottom: 1px solid #438bca;
@@ -1109,6 +1382,7 @@ export default defineComponent({
 .analytic-table {
   background-color: rgba(255, 255, 255, 0.1);
   color: #fff;
+  border-radius: 14px;
 }
 .q-table thead,
 .q-table tr,
@@ -1133,7 +1407,15 @@ export default defineComponent({
   }
 }
 
+.block-graph-no-padding {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  padding-right: 4px;
+  padding-top: 8px;
+}
+
 .impact {
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.1);
   border-radius: 14px;
   padding: 14px;
@@ -1214,6 +1496,7 @@ export default defineComponent({
 .q-linear-progress__model {
   border-radius: 8px;
 }
+
 .meters {
   .meters-holder {
     display: inline-block;
@@ -1224,6 +1507,36 @@ export default defineComponent({
   font-size: 16px;
   b {
     margin-left: auto;
+    padding-left: 10px;
+  }
+}
+
+.chart-btns {
+  .active {
+    background-color: #438bca;
+  }
+}
+
+.communication {
+  b,
+  span {
+    display: inline-block;
+  }
+  font-size: 12px;
+}
+
+.software {
+  font-size: 14px;
+  a {
+    display: flex;
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px solid #fff;
+    margin-bottom: 5px;
+    b {
+      margin-left: auto;
+      padding-left: 10px;
+    }
   }
 }
 </style>
