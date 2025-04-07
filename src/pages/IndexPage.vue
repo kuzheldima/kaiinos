@@ -7,10 +7,7 @@
           <q-breadcrumbs-el label="Block Load Data" />
         </q-breadcrumbs>
       </div>
-      <span class="q-ml-auto q-mr-lg" style="color: #909bc7"
-        >Last data received: Apr2,2025 21:45</span
-      >
-      <div class="btns-group">
+      <div class="btns-group q-ml-auto">
         <!-- <q-btn
           flat
           round
@@ -75,7 +72,17 @@
         </q-btn>
       </div>
       <div class="row wrap q-col-gutter-md q-px-md q-pb-md">
-        <div class="col-3">
+        <div class="col">
+          <div class="card-holder flex column items-center">
+            <img width="30px" :src="$options.meter" alt="" />
+            <span>Total Meters</span>
+            <strong>30678</strong>
+            <p class="flex items-center q-mb-none">
+              updated: Apr 2, 2025 21:45
+            </p>
+          </div>
+        </div>
+        <div class="col">
           <div class="card-holder flex column items-center">
             <img width="30px" :src="$options.weekly" alt="" />
             <span>Performance</span>
@@ -86,7 +93,7 @@
             </p>
           </div>
         </div>
-        <div class="col-3">
+        <div class="col">
           <div class="card-holder flex column items-center">
             <img width="30px" :src="$options.meter" alt="" />
             <span>Meters Not Responded</span>
@@ -97,7 +104,7 @@
             </p>
           </div>
         </div>
-        <div class="col-3">
+        <div class="col">
           <div class="card-holder flex column items-center">
             <img width="30px" :src="$options.sla" alt="" />
             <span>8 hours SLA</span>
@@ -108,7 +115,7 @@
             </p>
           </div>
         </div>
-        <div class="col-3">
+        <div class="col">
           <div class="card-holder flex column items-center">
             <img width="30px" :src="$options.sla" alt="" />
             <span>12 hours SLA</span>
@@ -124,7 +131,7 @@
         <div class="col-6">
           <div class="glass-card">
             <div class="flex items-center justify-between">
-              <strong class="text-h5 q-pl-md">Performance</strong>
+              <strong class="text-h6 q-pl-md">Performance</strong>
               <q-btn
                 @click="showFullScreen = true"
                 flat
@@ -137,6 +144,20 @@
             </div>
             <div class="chart-btns full-width flex q-mt-sm q-pl-md">
               <q-btn
+                :class="{ active: selection['chart'] === 'one_day' }"
+                color="0c1d44"
+                size="sm"
+                @click="filterChart('chart', 'one_day')"
+                label="1D"
+              ></q-btn>
+              <q-btn
+                :class="{ active: selection['chart'] === 'one_week' }"
+                color="0c1d44"
+                size="sm"
+                @click="filterChart('chart', 'one_week')"
+                label="1W"
+              ></q-btn>
+              <q-btn
                 :class="{ active: selection['chart'] === 'one_month' }"
                 color="0c1d44"
                 size="sm"
@@ -144,25 +165,18 @@
                 label="1M"
               ></q-btn>
               <q-btn
-                :class="{ active: selection['chart'] === 'six_months' }"
+                :class="{ active: selection['chart'] === 'three_month' }"
                 color="0c1d44"
                 size="sm"
-                @click="filterChart('chart', 'six_months')"
+                @click="filterChart('chart', 'three_month')"
+                label="3M"
+              ></q-btn>
+              <q-btn
+                :class="{ active: selection['chart'] === 'six_month' }"
+                color="0c1d44"
+                size="sm"
+                @click="filterChart('chart', 'six_month')"
                 label="6M"
-              ></q-btn>
-              <q-btn
-                :class="{ active: selection['chart'] === 'one_year' }"
-                color="0c1d44"
-                size="sm"
-                @click="filterChart('chart', 'one_year')"
-                label="1Y"
-              ></q-btn>
-              <q-btn
-                :class="{ active: selection['chart'] === 'all' }"
-                color="0c1d44"
-                size="sm"
-                @click="filterChart('chart', 'all')"
-                label="ALL"
               ></q-btn>
             </div>
             <vue-apex-charts
@@ -177,7 +191,7 @@
         <div class="col-6">
           <div class="glass-card">
             <div class="flex items-center justify-between">
-              <strong class="text-h5 q-pl-md">Meters Not Responded</strong>
+              <strong class="text-h6 q-pl-md">Meters Not Responded</strong>
               <q-btn
                 @click="showFullScreen = true"
                 flat
@@ -190,6 +204,20 @@
             </div>
             <div class="chart-btns full-width flex q-mt-sm q-pl-md">
               <q-btn
+                :class="{ active: selection['chart2'] === 'one_day' }"
+                color="0c1d44"
+                size="sm"
+                @click="filterChart('chart2', 'one_day')"
+                label="1D"
+              ></q-btn>
+              <q-btn
+                :class="{ active: selection['chart2'] === 'one_week' }"
+                color="0c1d44"
+                size="sm"
+                @click="filterChart('chart2', 'one_week')"
+                label="1W"
+              ></q-btn>
+              <q-btn
                 :class="{ active: selection['chart2'] === 'one_month' }"
                 color="0c1d44"
                 size="sm"
@@ -197,25 +225,18 @@
                 label="1M"
               ></q-btn>
               <q-btn
-                :class="{ active: selection['chart2'] === 'six_months' }"
+                :class="{ active: selection['chart2'] === 'three_month' }"
                 color="0c1d44"
                 size="sm"
-                @click="filterChart('chart2', 'six_months')"
+                @click="filterChart('chart2', 'three_month')"
+                label="3M"
+              ></q-btn>
+              <q-btn
+                :class="{ active: selection['chart2'] === 'six_month' }"
+                color="0c1d44"
+                size="sm"
+                @click="filterChart('chart2', 'six_month')"
                 label="6M"
-              ></q-btn>
-              <q-btn
-                :class="{ active: selection['chart2'] === 'one_year' }"
-                color="0c1d44"
-                size="sm"
-                @click="filterChart('chart2', 'one_year')"
-                label="1Y"
-              ></q-btn>
-              <q-btn
-                :class="{ active: selection['chart2'] === 'all' }"
-                color="0c1d44"
-                size="sm"
-                @click="filterChart('chart2', 'all')"
-                label="ALL"
               ></q-btn>
             </div>
             <vue-apex-charts
@@ -229,7 +250,7 @@
         </div>
         <div class="col-6">
           <div class="glass-card">
-            <strong class="text-h5 q-pl-md">8 hours SLA</strong>
+            <strong class="text-h6 q-pl-md">8 hours SLA</strong>
             <vue-apex-charts
               width="100%"
               height="400px"
@@ -240,7 +261,7 @@
         </div>
         <div class="col-6">
           <div class="glass-card">
-            <strong class="text-h5 q-pl-md">12 hours SLA</strong>
+            <strong class="text-h6 q-pl-md">12 hours SLA</strong>
             <vue-apex-charts
               width="100%"
               height="400px"
@@ -253,8 +274,8 @@
       <div class="row wrap q-col-gutter-md q-px-md q-pb-md">
         <div class="col-6">
           <div class="impact">
-            <span class="block text-h5">Impact</span>
-            <div class="row wrap q-col-gutter-md q-pt-lg q-px-xs q-pb-md">
+            <span class="block text-h6">Impact</span>
+            <div class="row wrap q-col-gutter-md q-pt-md q-px-xs q-pb-md">
               <div class="col-6">
                 <div class="item-holder">
                   <span>Revenue loss</span>
@@ -342,8 +363,8 @@
         </div>
         <div class="col-6">
           <div class="impact">
-            <span class="block text-h5">Suggestions</span>
-            <div class="row wrap q-col-gutter-md q-pt-lg q-px-xs q-pb-md">
+            <span class="block text-h6">Suggestions</span>
+            <div class="row wrap q-col-gutter-md q-pt-md q-px-xs q-pb-md">
               <div class="col-12">
                 <div class="suggestion-card">
                   <div class="suggestion-header">
@@ -427,27 +448,23 @@
           ></q-btn>
         </div>
         <div class="content q-px-md q-py-sm">
-          <span class="block bar-label q-mb-sm">Last 7 Days Trend</span>
-          <div class="block-graph-no-padding q-mb-md">
-            <vue-apex-charts
-              width="100%"
-              height="150px"
-              :options="timeOptions"
-              :series="timeOptions.series"
-            ></vue-apex-charts>
-          </div>
           <span class="block bar-label q-mb-sm">Advanced Analytics</span>
           <q-table
-            class="analytic-table q-mb-xs"
+            class="analytic-table q-mb-md"
             :rows="rows"
             hide-pagination
             flat
             :columns="columns"
             dense
-          />
-          <span class="block text-negative q-mb-sm" style="font-size: 14px"
-            >Failures: 2.1%</span
           >
+            <template v-slot:body-cell="props">
+              <q-td :props="props">
+                <span :class="`text-${props.row.class}`">{{
+                  props.value
+                }}</span>
+              </q-td>
+            </template>
+          </q-table>
           <span class="block bar-label q-mb-sm">Diagnosis</span>
           <div class="block-graph flex items-center q-mb-md">
             <div class="graph-legend">
@@ -469,6 +486,15 @@
                 ></q-icon>
                 MNR: 0.5%
               </span>
+              <span>
+                <q-icon
+                  name="sym_r_api"
+                  color="secondary"
+                  class="q-mr-sm"
+                  size="18px"
+                ></q-icon>
+                Software 0.7%
+              </span>
             </div>
             <div class="graph-holder">
               <vue-apex-charts
@@ -479,10 +505,15 @@
               ></vue-apex-charts>
             </div>
           </div>
-          <span class="block bar-label q-mb-sm">Details</span>
+          <span class="block bar-label q-mb-sm">
+            Details
+            <q-btn icon="sym_r_download" flat round size="sm">
+              <q-tooltip>Download report</q-tooltip>
+            </q-btn>
+          </span>
           <div class="block-graph q-mb-md">
             <strong style="font-size: 15px">Meters</strong>
-            <div class="flex items-center justify-between q-mb-sm">
+            <div class="flex items-center justify-between q-mb-md">
               <p class="q-mb-none">To replace or fix: 500 meters</p>
               <q-btn
                 class="q-ml-auto"
@@ -493,7 +524,7 @@
               ></q-btn>
             </div>
             <strong style="font-size: 15px">Communication</strong>
-            <div class="row communication q-mb-sm">
+            <div class="row communication">
               <div class="col">
                 <b style="color: #289df9">RF: 1% (1000 Meters)</b>
                 <span>HW: 0.3% (300)</span>
@@ -505,10 +536,10 @@
                 <span>Signal: 0.4% (393)</span>
               </div>
             </div>
-            <span class="block text-negative q-mb-sm" style="font-size: 14px"
+            <span class="block text-negative" style="font-size: 14px"
               >Meters non responding >2 days: 125</span
             >
-            <div class="flex items-center justify-between q-mb-sm">
+            <div class="flex items-center justify-between q-mb-md">
               <p class="q-mb-none">Request service</p>
               <q-btn
                 class="q-ml-auto"
@@ -580,6 +611,20 @@
       <q-card-section class="q-py-lg q-px-lg">
         <div class="chart-btns full-width flex q-mt-sm q-pl-md">
           <q-btn
+            :class="{ active: selection['chart'] === 'one_day' }"
+            color="0c1d44"
+            size="sm"
+            @click="filterChart('chart', 'one_day')"
+            label="1D"
+          ></q-btn>
+          <q-btn
+            :class="{ active: selection['chart'] === 'one_week' }"
+            color="0c1d44"
+            size="sm"
+            @click="filterChart('chart', 'one_week')"
+            label="1W"
+          ></q-btn>
+          <q-btn
             :class="{ active: selection['chart'] === 'one_month' }"
             color="0c1d44"
             size="sm"
@@ -587,25 +632,18 @@
             label="1M"
           ></q-btn>
           <q-btn
-            :class="{ active: selection['chart'] === 'six_months' }"
+            :class="{ active: selection['chart'] === 'three_month' }"
             color="0c1d44"
             size="sm"
-            @click="filterChart('chart', 'six_months')"
+            @click="filterChart('chart', 'three_month')"
+            label="3M"
+          ></q-btn>
+          <q-btn
+            :class="{ active: selection['chart'] === 'six_month' }"
+            color="0c1d44"
+            size="sm"
+            @click="filterChart('chart', 'six_month')"
             label="6M"
-          ></q-btn>
-          <q-btn
-            :class="{ active: selection['chart'] === 'one_year' }"
-            color="0c1d44"
-            size="sm"
-            @click="filterChart('chart', 'one_year')"
-            label="1Y"
-          ></q-btn>
-          <q-btn
-            :class="{ active: selection['chart'] === 'all' }"
-            color="0c1d44"
-            size="sm"
-            @click="filterChart('chart', 'all')"
-            label="ALL"
           ></q-btn>
         </div>
         <vue-apex-charts
@@ -641,28 +679,34 @@ export default defineComponent({
         this.selection[chart] = timeline;
 
         switch (timeline) {
+          case "one_day":
+            this.$refs[chart].zoomX(
+              new Date("27 Jan 2012").getTime(),
+              new Date("28 Jan 2012").getTime()
+            );
+            break;
+          case "one_week":
+            this.$refs[chart].zoomX(
+              new Date("27 Jan 2012").getTime(),
+              new Date("4 Feb 2012").getTime()
+            );
+            break;
           case "one_month":
             this.$refs[chart].zoomX(
-              new Date("28 Jan 2013").getTime(),
-              new Date("27 Feb 2013").getTime()
+              new Date("27 Jan 2012").getTime(),
+              new Date("27 Feb 2012").getTime()
             );
             break;
-          case "six_months":
+          case "three_month":
             this.$refs[chart].zoomX(
-              new Date("27 Sep 2012").getTime(),
-              new Date("27 Feb 2013").getTime()
+              new Date("27 Jan 2012").getTime(),
+              new Date("27 Apr 2012").getTime()
             );
             break;
-          case "one_year":
+          case "six_month":
             this.$refs[chart].zoomX(
-              new Date("27 Feb 2012").getTime(),
-              new Date("27 Feb 2013").getTime()
-            );
-            break;
-          case "all":
-            this.$refs[chart].zoomX(
-              new Date("23 Jan 2012").getTime(),
-              new Date("27 Feb 2013").getTime()
+              new Date("27 Jan 2012").getTime(),
+              new Date("27 Jul 2012").getTime()
             );
             break;
           default:
@@ -674,8 +718,8 @@ export default defineComponent({
     return {
       showFullScreen: false,
       selection: {
-        chart: "one_year",
-        chart2: "one_year",
+        chart: "",
+        chart2: "",
       },
       columns: [
         { name: "what", label: "", field: "what", align: "left" },
@@ -684,10 +728,10 @@ export default defineComponent({
       ],
       rows: [
         { what: "System Performance", today: 97.9, mtd: "98.1" },
-        { what: "Faliures", today: 2.1, mtd: "1.9" },
+        { what: "Faliures", today: 2.1, mtd: "1.9", class: "negative" },
         { what: "0-8 hours", today: 1.8, mtd: "1.3" },
         { what: "8-12 hours", today: 1.9, mtd: "1.6" },
-        { what: "<12 hours", today: 0.8, mtd: "0.6" },
+        { what: ">12 hours", today: 0.8, mtd: "0.6" },
       ],
       showAnalytic: false,
       showFilters: true,
@@ -982,7 +1026,7 @@ export default defineComponent({
               selection: true,
               reset: false,
               pan: true,
-              zoom: false,
+              zoom: true,
             },
           },
           zoom: {
@@ -1037,45 +1081,34 @@ export default defineComponent({
         },
       },
       analyticOptions: {
-        series: [76.19, 23.81],
+        series: [87, 55, 67],
         chartOptions: {
           chart: {
-            width: 380,
-            type: "donut",
+            height: 350,
+            type: "radialBar",
+            background: "transparent",
           },
-          stroke: {
-            show: true,
-            width: 1,
-            colors: ["#6196c0"],
-          },
+          
           plotOptions: {
-            pie: {
-              donut: {
-                size: "60%",
-              },
+            radialBar: {
+              track: {
+              background: "rgba(255, 255, 255, 0.1)",
             },
-          },
-
-          dataLabels: {
-            enabled: false,
-          },
-          colors: ["#24649c", "#C0392B"],
-          legend: {
-            show: false,
-          },
-          responsive: [
-            {
-              breakpoint: 480,
-              options: {
-                chart: {
-                  width: 200,
+              dataLabels: {
+                name: {
+                  fontSize: "12px",
                 },
-                legend: {
-                  position: "bottom",
+                value: {
+                  fontSize: "12px",
+                },
+                total: {
+                  show: false,
                 },
               },
             },
-          ],
+          },
+          labels: ["Comm", "MNR", "Software"],
+          colors: ["#24649c", "#cd1806", "#ffd166"],
         },
       },
       analyticLineOptions: {
@@ -1237,7 +1270,7 @@ export default defineComponent({
               },
               value: {
                 formatter: function (val) {
-                  return val + "MVW";
+                  return val + "MW";
                 },
                 fontSize: "20px", // ✅ Adjust size of "67"
                 fontWeight: "bold",
@@ -1287,54 +1320,6 @@ export default defineComponent({
               foreColor: "#fff",
             },
           ],
-        },
-      },
-      timeOptions: {
-        series: [
-          {
-            data: [0, -41, 35, -51, 0, 62, -69, 32, -32, 54, 16, -50],
-          },
-        ],
-        chart: {
-          type: "area",
-          foreColor: "#fff",
-          zoom: {
-            enabled: false,
-          },
-        },
-        grid: {
-          borderColor: "#438bca",
-        },
-        dataLabels: {
-          enabled: false,
-        },
-        xaxis: {
-          categories: [
-            "00",
-            "01",
-            "02",
-            "03",
-            "04",
-            "05",
-            "06",
-            "07",
-            "08",
-            "09",
-            "10",
-            "11",
-          ],
-        },
-        stroke: {
-          width: 0,
-        },
-        plotOptions: {
-          line: {
-            colors: {
-              threshold: 0,
-              colorAboveThreshold: "#077ad3",
-              colorBelowThreshold: "#cd1806",
-            },
-          },
         },
       },
     };

@@ -15,7 +15,9 @@
           </template>
         </q-input>
         <div class="btns">
-          <q-btn class="q-mx-sm" outline round color="accent" no-caps icon="notifications" style="min-height: 35px; min-width: 35px;" />
+          <q-btn class="q-mx-sm" outline round color="accent" no-caps icon="notifications" style="min-height: 35px; min-width: 35px;">
+            <q-badge color="primary" floating>4</q-badge>
+          </q-btn>
           <q-btn outline round color="accent" no-caps icon="person" style="min-height: 35px; min-width: 35px;" />
         </div>
       </q-toolbar>
